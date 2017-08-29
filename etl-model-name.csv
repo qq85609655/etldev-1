@@ -109,3 +109,15 @@ ETL目标表,etl_tables,,X,X,X,X
 实际开始日期,actual_start_dt,,X,X,X,X
 加载组别,load_group,,X,X,X,X
 是否分区键,is_partition_key,,X,X,X,X
+字段值域分布,col_value_histogram,,X,X,X,X
+值域分布ID,value_histogram_id,,X,X,X,X
+值域分布,value_histogram,,X,X,X,X
+统计时间,collect_time,,X,X,X,X
+特征值出现频率,mode_value_freq,,X,X,X,X
+特征值,mode_value,,X,X,X,X
+最大值,max_value,,X,X,X,X
+最小值,min_value,,X,X,X,X
+取值数目,value_count,,X,X,X,X
+空值数目,null_count,,X,X,X,X
+字段统计信息,column_stats,,X,X,X,X
+表统计信息,table_stats,,X,X,X,X
