@@ -121,3 +121,4 @@ ETL目标表,etl_tables,,X,X,X,X
 空值数目,null_count,,X,X,X,X
 字段统计信息,column_stats,,X,X,X,X
 表统计信息,table_stats,,X,X,X,X
+是否分批加载,is_single_source,,X,X,X,X

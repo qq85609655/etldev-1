@@ -124,6 +124,7 @@ CREATE TABLE dw_table
 	do_aggregate         boolean NULL,
 	subject_name         VARCHAR(64) NULL,
 	is_fact              boolean NULL,
+	is_single_source     boolean NULL,
 	comments             VARCHAR(512) NULL
 );
 
@@ -416,3 +417,65 @@ CREATE TABLE vocabulary
 
 ALTER TABLE vocabulary
 ADD PRIMARY KEY (cn_word);
+
+ALTER TABLE analysis_question
+ADD FOREIGN KEY R_36 (sys_name, schema_name, table_name) REFERENCES src_table_analysis (sys_name, schema_name, table_name);
+
+ALTER TABLE col_value_histogram
+ADD FOREIGN KEY R_51 (value_histogram_id) REFERENCES value_histogram (value_histogram_id);
+
+ALTER TABLE column_stats
+ADD FOREIGN KEY R_49 (sys_name, schema_name, table_name, column_name) REFERENCES src_column_analysis (sys_name, schema_name, table_name, column_name);
+
+ALTER TABLE column_stats
+ADD FOREIGN KEY R_52 (value_histogram_id) REFERENCES value_histogram (value_histogram_id);
+
+ALTER TABLE dw_column_mapping
+ADD FOREIGN KEY R_12 (sys_name, schema_name, table_name, column_name) REFERENCES dw_columns (sys_name, schema_name, table_name, column_name);
+
+ALTER TABLE dw_column_mapping
+ADD FOREIGN KEY R_45 (src_sys_name, src_schema, src_table_name, src_column_name) REFERENCES src_column_analysis (sys_name, schema_name, table_name, column_name);
+
+ALTER TABLE dw_columns
+ADD FOREIGN KEY R_8 (sys_name, schema_name, table_name) REFERENCES dw_table (sys_name, schema_name, table_name);
+
+ALTER TABLE dw_table
+ADD FOREIGN KEY (sys_name, schema_name, table_name) REFERENCES etl_tables(sys_name, schema_name, table_name)
+		ON DELETE CASCADE;
+
+ALTER TABLE dw_table
+ADD FOREIGN KEY R_37 (subject_name) REFERENCES dw_subject (subject_name);
+
+ALTER TABLE dw_table_mapping
+ADD FOREIGN KEY R_33 (sys_name, schema_name, table_name) REFERENCES dw_table (sys_name, schema_name, table_name);
+
+ALTER TABLE dw_table_mapping
+ADD FOREIGN KEY R_46 (src_sys_name, src_schema, src_table_name) REFERENCES src_table_analysis (sys_name, schema_name, table_name);
+
+ALTER TABLE etl_tables
+ADD FOREIGN KEY R_20 (sys_name, schema_name) REFERENCES table_schema (sys_name, schema_name);
+
+ALTER TABLE etl_tasks
+ADD FOREIGN KEY R_24 (sys_name, schema_name, table_name) REFERENCES etl_tables (sys_name, schema_name, table_name);
+
+ALTER TABLE etl_tasks
+ADD FOREIGN KEY R_25 (etl_dvlpr_name) REFERENCES etl_developer (etl_dvlpr_name);
+
+ALTER TABLE src_column_analysis
+ADD FOREIGN KEY R_5 (sys_name, schema_name, table_name) REFERENCES src_table_analysis (sys_name, schema_name, table_name);
+
+ALTER TABLE src_table_analysis
+ADD FOREIGN KEY (sys_name, schema_name, table_name) REFERENCES etl_tables(sys_name, schema_name, table_name)
+		ON DELETE CASCADE;
+
+ALTER TABLE src_tbl_subject
+ADD FOREIGN KEY R_39 (sys_name, schema_name, table_name) REFERENCES src_table_analysis (sys_name, schema_name, table_name);
+
+ALTER TABLE src_tbl_subject
+ADD FOREIGN KEY R_40 (subject_name) REFERENCES dw_subject (subject_name);
+
+ALTER TABLE table_schema
+ADD FOREIGN KEY R_34 (sys_name) REFERENCES ent_system (sys_name);
+
+ALTER TABLE table_stats
+ADD FOREIGN KEY R_48 (sys_name, schema_name, table_name) REFERENCES src_table_analysis (sys_name, schema_name, table_name);
